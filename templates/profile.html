@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %} Мой профиль {% endblock %} 
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{{ form.hidden_tag() }}
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/profile.css') }}"
+/>
+<form action="" method="post">
+  <div class="main-container">
+    <div class="left-part"></div>
+    <div class="central-part">
+      <img
+        src="{{ url_for('static', filename='files/artist.png') }}"
+        alt=""
+        class="artist"
+      /><br /><br />
+      <div class="list">
+        <ul>
+          Пользователь:
+          <b>{{ user }}</b>
+        </ul>
+        <ul>
+          Пароль:
+          <input name="pswrd1" type="password" value=""/>
+        </ul>
+        <ul>
+          Повтор:
+          <input name="pswrd2" type="password" value=""/>
+        </ul>
+      </div>
+      <br />
+      {% for cat, msg in get_flashed_messages(true) %}
+      <div class="flash {{cat}}">{{msg}}</div>
+      {% endfor %}
+      <br />
+      <input type="submit" class="edit-button" value="Обновить пароль"><br>
+    </div>
+    <div class="right-part"></div>
+  </div>
+</form>
+
+{% endblock %}

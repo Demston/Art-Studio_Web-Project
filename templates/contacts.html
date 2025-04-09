@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block title %} Контакты {% endblock %}
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/contacts.css') }}"
+/>
+
+<div class="main-container">
+  <div class="left-part"></div>
+  <div class="central-part">
+    <p>
+      Если Вас заинтересовало моё творчество и Вы хотите приобрести картины, со
+      мной можно связаться следующим способом: <br /><br />
+    </p>
+
+    <div class="list">
+      <ul>
+        <a href=mailto:{{email}}>{{email}}</a>
+      </ul>
+      <ul>
+        <img
+          src="{{ url_for('static', filename='files/tg.png') }}"
+          alt=""
+          class="tg"
+        /><img
+          src="{{ url_for('static', filename='files/wa.png') }}"
+          alt=""
+          class="wa"
+        />
+        <a href=tel:{{phone}}>{{phone}}</a>
+      </ul>
+    </div>
+    <br />
+    {{edit_btn|safe}}
+  </div>
+  <div class="right-part"></div>
+</div>
+
+{% endblock %}

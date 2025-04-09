@@ -1,0 +1,55 @@
+{% extends 'base.html' %} 
+{% block title %} Арт-Студия Юрия Пономарёва {% endblock %} 
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/index.css') }}"
+/>
+
+<div class="main-container">
+  <div class="left-bar">
+    <img src="{{ url_for('static', filename='files/art-room.png') }}" />
+  </div>
+  <div class="right-bar">
+    <div class="main-text">
+      <a
+        >Творческий путь:<br />Как найти вдохновение и создать уникальное
+        произведение искусства</a
+      >
+    </div>
+  </div>
+</div>
+<div style="clear: both"></div>
+<div class="ornament-main">
+  <img
+    class="ornament"
+    src="{{ url_for('static', filename='files/ornament-1.png') }}"
+  />
+</div>
+<div class="main-news-block">
+  {% for p in news %}
+  <div class="news">
+    <div class="news-text"><div class="news-text_text">{{ p.text }}</div>
+      <div class="news-text_date"><br />Дата публикации: {{ p.dt }}</div>
+    </div>
+    <div class="news-image">
+      <a href="{{ url_for ('static', filename=p.img) }}">
+        <img
+          src="{{ url_for ('static', filename=p.img) }}"
+          alt="preview"
+        />
+    </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<div class="final-div"></div>
+{% endblock %}

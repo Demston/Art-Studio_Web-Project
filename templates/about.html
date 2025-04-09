@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% block title %} Юрий Пономарёв {% endblock %} 
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/about.css') }}"
+/>
+
+<div class="main-container">
+  <div class="left-bar">
+    <img src="{{url_for('thephoto')}}" />
+  </div>
+  <div class="right-bar">
+    <div class="main-text">{{ description }}</div>
+  </div>
+</div>
+<div style="clear: both"></div>
+<div class="ornament-main">
+  <img class="ornament" src="{{ url_for('static', filename='files/ornament-1.png') }}" alt="" />
+</div>
+{{ edit_btn|safe }}
+<div class="final-div"></div>
+
+{% endblock %}

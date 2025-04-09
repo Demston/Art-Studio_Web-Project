@@ -1,0 +1,105 @@
+/* важность по тегу = 1, по классу = 10, 
+по id = 100, в самом теге = 1000;
+Шрифт по умолчанию = 16px, соответственно, величина 1em = 16px*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.top-div {
+  padding-top: 5%;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3);
+}
+
+.card {
+  margin: 1.5em;
+}
+
+.card img {
+  width: 100%;
+}
+
+.info {
+  width: 100%;
+  text-align: center;
+}
+
+.info a {
+  color: rgb(50, 50, 50);
+}
+
+.image-article {
+  font-size: medium;
+  text-decoration: none;
+}
+
+.image-name {
+  font-size: large;
+  text-decoration: none;
+}
+
+button {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin-top: 0.2em;
+  margin-inline: 0.5em;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #d3d3d3;
+  color: rgb(60, 60, 60);
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button a {
+  color: rgb(60, 60, 60);
+  text-decoration: none;
+
+}
+
+.add-img {
+  padding-top: 10%;
+}
+
+.final-div {
+  padding-bottom: 3%;
+}
+
+@media (max-width: 1080px) {
+  .top-div {
+    padding-top: 15%;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5);
+  }
+}
+
+@media (max-width: 800px) {
+  .top-div {
+    padding-top: 20%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(9);
+  }
+  .card {
+    margin-inline: 4px;
+  }
+}

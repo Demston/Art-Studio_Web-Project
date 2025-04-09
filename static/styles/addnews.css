@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  padding-top: 7%;
+}
+
+.main-news-block {
+  margin-bottom: 3%;
+}
+
+.news {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14pt;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.news-text {
+  grid-column: 2/3;
+  text-align: center;
+}
+
+textarea {
+  font-size: 14px;
+  padding: 0.5em;
+}
+
+.input-text {
+  margin: 5%;
+}
+
+.input-text_text
+{
+  font-size: 12pt;
+  width: 480px;
+}
+
+.news-image {
+  grid-column: 2;
+  text-align: center;
+  margin: 15px;
+}
+
+.news-image img {
+  width: 60%;
+}
+
+.news-buttons {
+  color: rgb(60, 60, 60);
+  grid-column: 2/3;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+button a {
+  color: rgb(60, 60, 60);
+  text-decoration: none;
+  font-size: 11pt;
+}
+
+.b1,
+.b2 {
+  margin-inline: 6px;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  color: rgb(60, 60, 60);
+  background: #d3d3d3;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.add-button {
+  font-size: larger;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #d3d3d3;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.final-div {
+  padding-bottom: 4%;
+}
+
+@media (max-width: 1360px) {
+  .main-container {
+    padding-top: 10%;
+    flex-direction: column;
+    padding: auto;
+  }
+}
+
+@media (max-width: 1080px) {
+  .main-container {
+    padding-top: 18%;
+    display: flex;
+    padding: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .main-container {
+    padding-top: 35%;
+  }
+
+  .input-text_text
+{
+  font-size: 11pt;
+  width: 320px;
+}
+}

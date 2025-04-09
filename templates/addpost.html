@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block title %} Добавить новость {% endblock %}
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/addnews.css') }}"
+/>
+
+<div class="main-container"></div>
+
+<div class="main-news-block">
+  <form action="" method="post"> 
+    <div class="news">
+      <div class="news-text">
+        Новость:
+        <div class="news-text_text">
+        <textarea name="text" id="text" rows="16" cols="48">{{ text }}</textarea>
+        </div>
+        {% for cat, msg in get_flashed_messages(true) %}
+        <div class="flash {{cat}}" style="margin: 1%;">{{msg}}</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="news-buttons">
+      <input type="submit" class="b1" value="Сохранить и продолжить">
+      <button class="b2">
+        <a href="/">Отмена</a>
+      </button>
+    </div>
+  </form>
+  
+</div>
+
+<div class="final-div"></div>
+
+{% endblock %}

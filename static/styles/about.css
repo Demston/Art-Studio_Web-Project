@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  padding-top: 7%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.left-bar {
+  grid-column: 1/4;
+  padding-left: 30%;
+}
+
+.left-bar img {
+  width: 90%;
+}
+
+.right-bar {
+  grid-column: 4/7;
+  padding-right: 45%;
+}
+
+.right-bar .main-text {
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+  font-size: 18pt;
+  padding-top: 0;
+  padding-left: 10%;
+  color: rgb(30, 30, 30);
+  white-space: pre-wrap;
+}
+
+.ornament-main {
+  margin: 3%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ornament {
+  grid-column: 2;
+  padding-left: auto;
+  padding-right: auto;
+  width: 100%;
+}
+
+.edit-button {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  font-size: medium;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #d3d3d3;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.edit-button a {
+  color: rgb(60, 60, 60);
+  text-decoration: none;
+}
+
+.final-div {
+  padding-bottom: 8%;
+}
+
+@media (max-width: 1360px) {
+  .main-container {
+    padding-top: 10%;
+    flex-direction: column;
+    padding: auto;
+  }
+
+  .right-bar .main-text {
+    font-size: 14pt;
+    padding: auto;
+    color: rgb(30, 30, 30);
+    text-align: justify;
+  }
+
+  .left-bar {
+    grid-column: 2/4;
+    padding-left: 0;
+  }
+
+  .left-bar img {
+    width: 100%;
+  }
+
+  .right-bar {
+    grid-column: 4/6;
+    padding-right: 0%;
+  }
+}
+
+@media (max-width: 1080px) {
+  .main-container {
+    padding-top: 18%;
+    display: flex;
+    padding: auto;
+  }
+
+  .left-bar {
+    width: 80%;
+  }
+
+  .left-bar img {
+    width: 100%;
+    padding-left: 12%;
+  }
+
+  .right-bar {
+    padding-right: 10%;
+    flex-direction: column;
+  }
+
+  .right-bar .main-text {
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-left: 10%;
+    color: rgb(30, 30, 30);
+  }
+
+  .ornament-main {
+    margin: 5%;
+  }
+}
+
+@media (max-width: 920px) {
+  .main-container {
+    padding-top: 25%;
+  }
+}
+
+@media (max-width: 860px) {
+  .main-container {
+    padding-top: 32%;
+  }
+}

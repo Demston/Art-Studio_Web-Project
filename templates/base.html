@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/navbar.css') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='files/favicon_io/apple-touch-icon.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='files/favicon_io/favicon-32x32.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='files/favicon_io/favicon-16x16.png') }}"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='files/favicon_io/site.webmanifest') }}"
+    />
+  </head>
+
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="logo-text">
+          <a
+            ><h2><b>Ponomarev Art Studio</b></h2></a
+          >
+        </div>
+        <div class="navlist">
+          <a href="/"><b>Главная</b></a>
+          <a href="/about"><b>Обо мне</b></a>
+          <a href="/catalog"><b>Работы</b></a>
+          <a href="/contacts"><b>Контакты</b></a>
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </header>
+
+    {% block body %}{% endblock %}
+
+    <footer>
+      <div class="foot1">© Арт-Студия Юрия Пономарёва</div>
+      <div class="foot2">web design by Demston</div>
+    </footer>
+  </body>
+</html>

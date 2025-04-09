@@ -1,0 +1,58 @@
+{% extends 'base.html' %} 
+{% block title %} Редактировать контакты {% endblock %} 
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{{ form.hidden_tag() }}
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/contacts.css') }}"
+/>
+
+<div class="main-container">
+  <div class="left-part"></div>
+  <div class="central-part">
+    <form action="" method="post">
+    E-Mail:
+    <input
+      type="text"
+      id="email"
+      name="email"
+      value="{{email}}"
+      width="45"
+      style="width: 220px"
+      maxlength="42"
+    />
+    <br /><br />
+    Телефон:
+    <input
+      type="text"
+      id="phone"
+      name="phone"
+      value="{{phone}}"
+      width="45"
+      style="width: 150px"
+      maxlength="42"
+    />
+    <br /><br /><br /><br />
+    <div class="buttons-block">
+      <div class="news-buttons">
+        <input type="submit" class="b1" value="Сохранить">
+        <button class="b2">
+          <a href="/contacts">Отмена</a>
+        </button>
+      </div>
+    </div>
+    </form>
+  </div>
+  <div class="right-part"></div>
+  
+
+  <div class="final-div"></div>
+
+  {% endblock %}
+</div>

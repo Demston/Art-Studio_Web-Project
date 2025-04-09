@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block title %} Авторизация {% endblock %} 
+{{ form.hidden_tag() }}
+{% block body %} 
+{{ super() }}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/contacts.css') }}"
+/>
+<form action="" method="post" class="form-contact">
+  
+  <div class="main-container">
+    <div class="left-part"></div>
+    <div class="central-part" style="white-space: pre-wrap">
+      Логин:
+      <input
+        type="text"
+        name="name"
+        value=""
+        width="45"
+        style="width: 180px"
+        maxlength="42"
+        required
+      />
+
+      Пароль:
+      <input
+        type="password"
+        name="psw"
+        value=""
+        width="45"
+        style="width: 180px"
+        maxlength="42"
+        required
+      />
+      {% for cat, msg in get_flashed_messages(true) %}
+      <div class="flash {{cat}}">{{msg}}</div>
+      {% endfor %}
+      <input
+        class="edit-button"
+        type="submit"
+        value="Войти"
+        style="font-size: 14pt"
+      />
+    </div>
+    <div class="right-part"></div>
+  </div>
+</form>
+
+<div class="final-div"></div>
+
+{% endblock %}

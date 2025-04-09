@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+{% block title %} Работы {% endblock %} 
+{% block content %}
+{{ prf_btn|safe }}
+{{ ext_btn|safe }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<link
+  rel="stylesheet"
+  href="{{ url_for ('static', filename='styles/catalog.css') }}"
+/>
+
+<div class="top-div"></div>
+<div class="container">
+  {% for p in pictures %}
+  <div class="card">
+    <a href="{{ url_for('static', filename=p.img) }}"
+      ><img
+        src="{{ url_for('static', filename=p.img) }}"
+    /></a>
+    <div class="info">
+      <a
+        class="image-name"
+        href="{{ url_for('static', filename=p.img) }}"
+      >
+        <p>{{ p.text }}</p>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<div class="final-div"></div>
+{% endblock %}

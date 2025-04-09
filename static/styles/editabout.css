@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  padding-top: 7%;
+}
+
+.main-news-block {
+  margin-bottom: 3%;
+}
+
+.news {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14pt;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.news-text {
+  grid-column: 2/3;
+  text-align: center;
+}
+
+textarea {
+  font-size: 14px;
+  padding: 0.5em;
+}
+
+.news-image {
+  grid-column: 2;
+  text-align: center;
+  margin: 15px;
+}
+
+.news-image img {
+  width: 60%;
+}
+
+.news-buttons {
+  grid-column: 2/3;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+button a {
+  color: rgb(30, 30, 30);
+  text-decoration: none;
+  font-size: medium;
+}
+
+.b1,
+.b2 {
+  margin-inline: 8px;
+}
+
+.add-button {
+  margin: auto;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.final-div {
+  padding-bottom: 4%;
+}
+
+@media (max-width: 1360px) {
+  .main-container {
+    padding-top: 10%;
+    flex-direction: column;
+    padding: auto;
+  }
+}
+
+@media (max-width: 1080px) {
+  .main-container {
+    padding-top: 18%;
+    display: flex;
+    padding: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .main-container {
+    padding-top: 35%;
+  }
+}
