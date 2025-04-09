@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS users
 name TEXT NOT NULL,
 psw TEXT NOT NULL);
 
-INSERT INTO users VALUES (1, 'admin', 'e13a900d88627e0edce0389e8c887ee0');
+INSERT INTO users VALUES (1, 'admin', 'afdd0b4ad2ec172c586e2150770fbf9e');
