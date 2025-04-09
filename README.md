@@ -10,3 +10,5 @@
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_6.png)<br>
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_7.png)<br>
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_9.png)<br>
+
+(На оформлении сайта представлены примеры для презентации)
