@@ -14,13 +14,14 @@
 
 <div class="main-container">
   <div class="left-bar">
-    <img src="{{ url_for('static', filename='files/art-room.png') }}" />
+    <a href="static/files/art-room.png">
+      <img src="static/files/art-room.png" />
+    </a>
   </div>
   <div class="right-bar">
     <div class="main-text">
       <a
-        >Творческий путь:<br />Как найти вдохновение и создать уникальное
-        произведение искусства</a
+        >Искусство должно быть чем–то, что освобождает вашу душу, пробуждает воображение и побуждает людей идти дальше</a
       >
     </div>
   </div>
@@ -29,29 +30,29 @@
 <div class="ornament-main">
   <img
     class="ornament"
-    src="{{ url_for('static', filename='files/ornament-1.png') }}"
+    src="static/files/ornament-1.png"
   />
 </div>
 <div class="main-news-block">
   {% for p in news %}
   <div class="news">
     <div class="news-text"><div class="news-text_text">{{ p.text }}</div>
-      <div class="news-text_date"><br />Дата публикации: {{ p.dt }}</div>
+      <div class="news-text_date"><br />Опубликовано: {{ p.dt }}</div>
     </div>
-    
     <div class="news-image">
-      <img
-        src="{{ url_for('static', filename=p.img) }}"
-        alt="preview"
-      />
+      <a href="/showpreview/post_{{p.post_id}}">
+        <img
+          src="/showpreview/post_{{p.post_id}}" alt=""
+        />
+      </a>
     </div>
   </div>
   <div class="news-buttons">
     <button class="b1">
-      <a href="/post_{{ p.post_id }}/editpost">Редактировать</a>
+      <a href="/editpost/post_{{ p.post_id }}">Редактировать</a>
     </button>
     <button class="b2">
-      <a href="/post_{{ p.post_id }}/deletepost">Удалить</a>
+      <a href="/deletepost/post_{{ p.post_id }}">Удалить</a>
     </button>
   </div>
   {% endfor %}

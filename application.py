@@ -14,28 +14,19 @@ from werkzeug.datastructures import MultiDict
 import hashlib
 
 # Конфигурация
-DEBUG = True
-DATABASE = 'database.db'
-UPLOAD_NEWS = r'static\images_news'  # путь к новостным картинкам
-UPLOAD_PICTURES = r'static\images_pictures'   # путь к сканам картин
-MAX_CONTENT_LENGTH = 10240 * 1024  # максимальный размер в байтах, 10Мб
-
+DEBUG = True   # не забываем выключить
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config.update(DATABASE=DATABASE)
-app.config['UPLOAD_NEWS'] = UPLOAD_NEWS
-app.config['UPLOAD_PICTURES'] = UPLOAD_PICTURES
+app.config.update(dict(DATABASE=os.path.join(app.root_path, 'database.db')))
+MAX_CONTENT_LENGTH = 10240 * 1024  # максимальный размер в байтах, 10Мб
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # вызывает страницу, если юзер не авторизован
-post_id_for_news_image = {}  # промежуточный словарь для добавления картинок к новостям
-pic_id_for_pic_images = {}  # промежуточный словарь для добавления картин в каталог
 
 
 @login_manager.user_loader
 def load_user(user_id):
     """Создаёт право на просмотр только залогиненым юзерам из БД"""
-    # print('load user')
     return UserLogin().fromDB(user_id, dbase)
 
 
@@ -87,7 +78,6 @@ def before_request():
 
 
 @app.route("/")
-@app.route("/index")
 def index():
     """Главная страница"""
     news = dbase.getNews()
@@ -95,6 +85,18 @@ def index():
         return render_template('indexadmin.html', news=news, prf_btn=prf_btn, ext_btn=ext_btn)
     else:
         return render_template('index.html', news=news)
+
+
+@app.route('/showpreview/post_<int:post_id>')
+def showpreview(post_id):
+    """Отображает картину по id."""
+    img_bin = dbase.getPost(post_id)['img']
+    if not img_bin:
+        return ""
+    if img_bin:
+        post_img = make_response(img_bin)
+        post_img.headers['Content-Type'] = 'image'
+        return post_img
 
 
 @app.route("/addpost", methods=['POST', 'GET'])
@@ -113,22 +115,20 @@ def addpost():
         return render_template('addpost.html', prf_btn=prf_btn, ext_btn=ext_btn)
 
 
-@app.route("/post_<int:last_id>/addpostimg", methods=['POST', 'GET'])
+@app.route("/addpostimg/post_<int:last_id>", methods=['POST', 'GET'])
 @login_required
 def addpostimg(last_id):
     """Добавить картинку в новый пост"""
-    post_id_for_news_image[current_user.get_id()] = last_id
     img = dbase.lastPostImg()
+    last_id = dbase.lastPostId()
     if current_user.is_authenticated and current_user.getName() == ADMIN:
-        return render_template('addpostimg.html', prf_btn=prf_btn, ext_btn=ext_btn, img=img)
+        return render_template('addpostimg.html', prf_btn=prf_btn, ext_btn=ext_btn, img=img, last_id=last_id)
 
 
-@app.route("/post_<int:post_id>/editpost", methods=['POST', 'GET'])
+@app.route("/editpost/post_<int:post_id>", methods=['POST', 'GET'])
 @login_required
 def editpost(post_id):
     """Редактировать новость"""
-    global post_id_for_news_image
-    post_id_for_news_image[current_user.get_id()] = post_id
     text = dbase.getPost(post_id)['text']
     img = dbase.getPost(post_id)['img']
     if request.method == 'POST':
@@ -136,26 +136,19 @@ def editpost(post_id):
         return redirect('/')
     if current_user.is_authenticated and current_user.getName() == ADMIN:
         return render_template('editpost.html', prf_btn=prf_btn, ext_btn=ext_btn,
-                               text=text, img=img)
+                               text=text, img=img, post_id=post_id)
 
 
-@app.route('/uploadimage', methods=['POST', 'GET'])
+@app.route('/uploadimage/post_<int:post_id>', methods=['POST', 'GET'])
 @login_required
-def uploadimage():
+def uploadimage(post_id):
     """Загрузка картинки к новости"""
-    global post_id_for_news_image
-    post_id = post_id_for_news_image[current_user.get_id()]  # берём id новости (из словаря), в которую зашёл админ
     if request.method == 'POST':
         file = request.files['file']
         if file and dbase.verifyExt(file.filename):  # проверяем расширение файла
             try:
-                ext = file.filename.rsplit('.', 1)[1]
-                new_name = f'{post_id}.{ext}'
-                img_path = (os.path.join(UPLOAD_NEWS, new_name))  # путь для сохранения
-                file.save(img_path)
-                img_path_cut = img_path.partition('\\')[2]
-                res = dbase.editPostImage(img_path_cut, post_id)
-                post_id_for_news_image[current_user.get_id()] = None
+                image = file.read()
+                res = dbase.editPostImage(image, post_id=post_id)
                 if not res:
                     pass
             except FileNotFoundError as e:
@@ -165,19 +158,12 @@ def uploadimage():
     return redirect(request.referrer)  # переход на предыдущую страницу
 
 
-@app.route("/post_<int:post_id>/deletepost")
+@app.route("/deletepost/post_<int:post_id>")
 @login_required
 def deletepost(post_id):
     """Удалить новость"""
-    image = dbase.getPost(post_id)['img']
-    image_name = image.partition('/')[-1]
-    image_path = (os.path.join(UPLOAD_NEWS, image_name))
-    if os.path.exists(image_path):
-        os.remove(image_path)
-    else:
-        pass
     dbase.deletePost(post_id)
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 # ################### Каталог с картинами. Добавление, Редактирование. Удаление ###################
@@ -193,6 +179,18 @@ def catalog():
         return render_template('catalog.html', pictures=pictures)
 
 
+@app.route('/showpicture/pic_<int:pic_id>')
+def showpicture(pic_id):
+    """Отображает картину по id."""
+    pic_bin = dbase.getPic(pic_id)['img']
+    if not pic_bin:
+        return ""
+    if pic_bin:
+        pic_img = make_response(pic_bin)
+        pic_img.headers['Content-Type'] = 'image'
+        return pic_img
+
+
 @app.route("/picplug", methods=['POST', 'GET'])
 @login_required
 def picplug():
@@ -202,46 +200,26 @@ def picplug():
     return redirect(url_for('addpicimg', last_id=last_id))
 
 
-@app.route("/pic_<int:last_id>/addpictext", methods=['POST', 'GET'])
-@login_required
-def addpictext(last_id):
-    """Добавить название картины (год, цена и т.д.)"""
-    if request.method == 'POST':
-        last_id = int(dbase.lastPicId())
-        dbase.editPic(request.form['text'], last_id)
-        return redirect(url_for('catalog'))
-    if current_user.is_authenticated and current_user.getName() == ADMIN:
-        return render_template('addpictext.html', prf_btn=prf_btn, ext_btn=ext_btn)
-
-
-@app.route("/pic_<int:last_id>/addpicimg", methods=['POST', 'GET'])
+@app.route("/addpicimg/pic_<int:last_id>", methods=['POST', 'GET'])
 def addpicimg(last_id):
     """Добавить картину"""
-    pic_id_for_pic_images[current_user.get_id()] = last_id
     img = dbase.lastPicImg()
     if request.method == 'POST':
         return redirect(url_for('addpictext', last_id=last_id))
     if current_user.is_authenticated and current_user.getName() == ADMIN:
-        return render_template('addpicimg.html', prf_btn=prf_btn, ext_btn=ext_btn, img=img)
+        return render_template('addpicimg.html', prf_btn=prf_btn, ext_btn=ext_btn, img=img, last_id=last_id)
 
 
-@app.route('/uploadpicture', methods=['POST', 'GET'])
+@app.route('/uploadpicture/pic_<int:pic_id>', methods=['POST', 'GET'])
 @login_required
-def uploadpicture():
-    """Загрузка картинки к новости"""
-    global pic_id_for_pic_images
-    pic_id = pic_id_for_pic_images[current_user.get_id()]  # берём id (из словаря), в которую зашёл админ
+def uploadpicture(pic_id):
+    """Загрузка картины"""
     if request.method == 'POST':
         file = request.files['file']
         if file and dbase.verifyExt(file.filename):  # проверяем расширение файла
             try:
-                ext = file.filename.rsplit('.', 1)[1]
-                new_name = f'{pic_id}.{ext}'
-                img_path = (os.path.join(UPLOAD_PICTURES, new_name))  # путь для сохранения
-                file.save(img_path)
-                img_path_cut = img_path.partition('\\')[2]
-                res = dbase.editPicImage(img_path_cut, pic_id)
-                pic_id_for_pic_images[current_user.get_id()] = None
+                image = file.read()
+                res = dbase.editPicImage(image, pic_id=pic_id)
                 if not res:
                     pass
             except FileNotFoundError as e:
@@ -251,34 +229,37 @@ def uploadpicture():
     return redirect(request.referrer)  # переход на предыдущую страницу
 
 
-@app.route("/pic_<int:pic_id>/editpicture", methods=['POST', 'GET'])
+@app.route("/addpictext/pic_<int:last_id>", methods=['POST', 'GET'])
+@login_required
+def addpictext(last_id):
+    """Добавить название картины (год, цена и т.д.)"""
+    if request.method == 'POST':
+        last_id = int(dbase.lastPicId())
+        dbase.editPic(request.form['text'], last_id)
+        return redirect('/catalog')
+    if current_user.is_authenticated and current_user.getName() == ADMIN:
+        return render_template('addpictext.html', prf_btn=prf_btn, ext_btn=ext_btn)
+
+
+@app.route("/editpicture/pic_<int:pic_id>", methods=['POST', 'GET'])
 def editpicture(pic_id):
     """Редактировать работу"""
-    global pic_id_for_pic_images
-    pic_id_for_pic_images[current_user.get_id()] = pic_id
     text = dbase.getPic(pic_id)['text']
     img = dbase.getPic(pic_id)['img']
     if request.method == 'POST':
-        dbase.editPic(request.form['text'], pic_id)
-        return redirect(url_for('catalog'))
+        dbase.editPic(request.form['text'], pic_id=pic_id)
+        return redirect('/catalog')
     if current_user.is_authenticated and current_user.getName() == ADMIN:
         return render_template('editpicture.html', prf_btn=prf_btn, ext_btn=ext_btn,
-                               text=text, img=img)
+                               text=text, img=img, pic_id=pic_id)
 
 
-@app.route("/pic_<int:pic_id>/deletepicture")
+@app.route("/deletepicture/pic_<int:pic_id>")
 @login_required
 def deletepicture(pic_id):
     """Удалить работу"""
-    image = dbase.getPic(pic_id)['img']
-    image_name = image.partition('/')[-1]
-    image_path = (os.path.join(UPLOAD_PICTURES, image_name))
-    if os.path.exists(image_path):
-        os.remove(image_path)
-    else:
-        pass
     dbase.deletePic(pic_id)
-    return redirect(url_for('catalog'))
+    return redirect('/catalog')
 
 
 @app.route("/deletepiclastid")
@@ -286,15 +267,8 @@ def deletepicture(pic_id):
 def deletepiclastid():
     """Удалить работу, которую начал добавлять"""
     last_id = int(dbase.lastPicId())
-    image = dbase.getPic(last_id)['img']
-    image_name = image.partition('/')[-1]
-    image_path = (os.path.join(UPLOAD_PICTURES, image_name))
-    if os.path.exists(image_path):
-        os.remove(image_path)
-    else:
-        pass
     dbase.deletePic(last_id)
-    return redirect(url_for('catalog'))
+    return redirect('/catalog')
 
 
 # ################### Раздел о себе. Редактирование ####################
@@ -355,7 +329,7 @@ def uploadphoto():
                 print("Ошибка чтения файла: " + str(e))
         else:
             print("Изображение не добавлено")
-    return redirect(url_for('about'))
+    return redirect('/editabout')
 
 
 # ################### Контактная информация. Редактирование ###################
@@ -418,7 +392,7 @@ def login():
     """Авторизация"""
     form = FlaskForm()  # подключим для защиты от csrf-атак
     if current_user.is_authenticated:  # перенаправим в профиль, если юзер уже вошёл
-        return redirect(url_for('profile'))
+        return redirect('/profile')
     if request.method == 'POST':
         user = dbase.getUserByName(request.form['name'])  # нашли юзера по имени в БД
         psw_form = request.form['psw']  # если юзер есть и хеш паролей совпали
@@ -427,7 +401,7 @@ def login():
             userlogin = UserLogin().create(user)
             login_user(userlogin, remember=True)  # login_user - импорт из flask_login
             # переход на запращиваемую страницу сразу после авторизации (либо в профиль, если не она найдена)
-            return redirect(request.args.get('next') or url_for('profile'))
+            return redirect(request.args.get('next') or '/profile')
         else:
             flash('Неверный логин/пароль!', 'error')
     return render_template("login.html", form=form)
@@ -438,7 +412,7 @@ def login():
 def logout():
     """Выход из профиля"""
     logout_user()  # logout_user - импорт из flask_login
-    return redirect(url_for('login'))
+    return redirect('/login')
 
 
 if __name__ == "__main__":

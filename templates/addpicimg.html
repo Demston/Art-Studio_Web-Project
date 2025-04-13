@@ -14,13 +14,13 @@
 <div class="main-container"></div>
 
 <div class="main-news-block">
-  <form action="{{url_for('uploadpicture')}}" method="POST" enctype="multipart/form-data">
+  <form action="/uploadpicture/pic_{{last_id}}" method="POST" enctype="multipart/form-data">
     <p><input type="file" name="file" class="add-button">
       <div class="news">
         <div class="news-image">
           <img
-            src="{{ url_for ('static', filename=img) }}"
-            alt="preview"
+            src="/showpicture/pic_{{last_id}}"
+            alt=""
         />
         </div>
       </div>

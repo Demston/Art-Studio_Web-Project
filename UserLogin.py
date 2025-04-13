@@ -1,4 +1,5 @@
 """Сессия текущего пользователя"""
+
 from flask_login import UserMixin
 
 

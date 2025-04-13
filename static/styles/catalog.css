@@ -40,7 +40,7 @@
 }
 
 .image-name {
-  font-size: large;
+  font-size: 14pt;
   text-decoration: none;
 }
 
@@ -80,6 +80,10 @@ button a {
     padding-top: 15%;
   }
 
+  .image-name {
+    font-size: 12pt;
+  }
+
   .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -89,7 +93,7 @@ button a {
 
 @media (max-width: 800px) {
   .top-div {
-    padding-top: 20%;
+    padding-top: 25%;
   }
 }
 
@@ -99,6 +103,7 @@ button a {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(9);
   }
+
   .card {
     margin-inline: 4px;
   }

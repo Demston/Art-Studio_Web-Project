@@ -16,14 +16,14 @@
 <div class="container">
   {% for p in pictures %}
   <div class="card">
-    <a href="{{ url_for('static', filename=p.img) }}"
+    <a href="/showpicture/pic_{{p.pic_id}}", alt='image'
       ><img
-        src="{{ url_for('static', filename=p.img) }}"
+        src="/showpicture/pic_{{p.pic_id}}", alt='image'
     /></a>
     <div class="info">
       <a
         class="image-name"
-        href="{{ url_for('static', filename=p.img) }}"
+        href="/showpicture/pic_{{p.pic_id}}"
       >
         <p>{{ p.text }}</p>
       </a>

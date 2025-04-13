@@ -1,4 +1,5 @@
 """База данных, чтение/запись"""
+
 import sqlite3
 import time
 
@@ -23,7 +24,7 @@ class FDataBase:
             dt_split = formatted_day.split(' ')[0]
             dt_revers = '-'.join(dt_split.split('-')[::-1])+formatted_time
             # делаем запрос на добавление
-            self.__cur.execute("INSERT INTO news VALUES(NULL, ?, ?, 'files/default-image.jpg')",
+            self.__cur.execute("INSERT INTO news VALUES(NULL, ?, ?, NULL)",
                                (text, dt_revers))
             self.__db.commit()
         except sqlite3.Error as e:
@@ -42,7 +43,7 @@ class FDataBase:
             dt_split = formatted_day.split(' ')[0]
             dt_revers = '-'.join(dt_split.split('-')[::-1])+formatted_time
             # делаем запрос на добавление
-            self.__cur.execute("INSERT INTO pictures VALUES(NULL, ?, ?, 'files/default-image.jpg')",
+            self.__cur.execute("INSERT INTO pictures VALUES(NULL, ?, ?, NULL)",
                                (text, dt_revers))
             self.__db.commit()
         except sqlite3.Error as e:
@@ -62,16 +63,16 @@ class FDataBase:
             credits()
         return True
 
-    def editPostImage(self, img_path_cut, post_id):
+    def editPostImage(self, image, post_id):
         """Редактирование/добавление картинки к новости"""
-        if not img_path_cut:
+        if not image:
             return False
         try:
-            new_path = img_path_cut.replace('\\', '/')
-            self.__cur.execute(f"UPDATE news SET img = ? WHERE post_id = ?", (new_path, post_id))
+            bin_image = sqlite3.Binary(image)
+            self.__cur.execute(f"UPDATE news SET img = ? WHERE post_id = ?", (bin_image, post_id))
             self.__db.commit()
         except sqlite3.Error as e:
-            print("Ошибка обновления фото "+str(e))
+            print("Ошибка обновления файла "+str(e))
             return False
         return True
 
@@ -95,13 +96,13 @@ class FDataBase:
             credits()
         return True
 
-    def editPicImage(self, img_path_cut, pic_id):
+    def editPicImage(self, image, pic_id):
         """Редактирование картины (путь к файлу)"""
-        if not img_path_cut:
+        if not image:
             return False
         try:
-            new_path = img_path_cut.replace('\\', '/')
-            self.__cur.execute(f"UPDATE pictures SET img = ? WHERE pic_id = ?", (new_path, pic_id))
+            bin_image = sqlite3.Binary(image)
+            self.__cur.execute(f"UPDATE pictures SET img = ? WHERE pic_id = ?", (bin_image, pic_id))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка обновления файла "+str(e))
@@ -184,6 +185,7 @@ class FDataBase:
                 return res
         except sqlite3.Error as e:
             print('Ошибка получения данных ' + str(e))
+        return True
 
     def lastPostId(self):
         """Крайняя запись (post id)"""
@@ -227,6 +229,7 @@ class FDataBase:
                 return res
         except sqlite3.Error as e:
             print('Ошибка получения данных ' + str(e))
+        return True
 
     def lastPicId(self):
         """Крайняя запись (pic id)"""

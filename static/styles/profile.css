@@ -84,6 +84,14 @@
   .central-part {
     padding-top: 50%;
   }
+
+  .left-part {
+    background-color: unset;
+  }
+
+  .right-part {
+    background-color: unset;
+  }
 }
 
 @media (max-width: 860px) {

@@ -18,24 +18,24 @@
     <a href="/picplug"
       ><img
         class="add-img"
-        src="{{ url_for ('static', filename='files/plus.png') }}"
+        src="static/files/plus.png"
     /></a>
   </div>
   {% for p in pictures %}
   <div class="card">
-    <a href="{{ url_for('static', filename=p.img) }}"
+    <a href="/showpicture/pic_{{p.pic_id}}", alt='image'
       ><img
-        src="{{ url_for('static', filename=p.img) }}"
+        src="/showpicture/pic_{{p.pic_id}}", alt='image'
     /></a>
     <div class="info">
       <a
         class="image-name"
-        href="{{ url_for('static', filename=p.img) }}"
+        href="/showpicture/pic_{{p.pic_id}}"
       >
         <p>{{ p.text }}</p>
       </a>
-      <button><a href="/pic_{{ p.pic_id }}/editpicture">Редактировать</a></button>
-      <button><a href="/pic_{{ p.pic_id }}/deletepicture">Удалить</a></button>
+      <button><a href="/editpicture/pic_{{ p.pic_id }}">Редактировать</a></button>
+      <button><a href="/deletepicture/pic_{{ p.pic_id }}">Удалить</a></button>
     </div>
   </div>
   {% endfor %}
