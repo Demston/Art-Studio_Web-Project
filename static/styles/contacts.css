@@ -154,13 +154,13 @@ button a {
 
 @media (max-width: 860px) {
   .central-part {
-    font-size: 11pt;
+    font-size: 12pt;
     padding-top: 10em;
     padding-left: 3%;
     padding-right: 3%;
   }
 
   .list ul {
-    font-size: 10pt;
+    font-size: 12pt;
   }
 }
