@@ -16,6 +16,8 @@ The website administrator can edit all available information via the web interfa
 All interaction buttons are hidden from third-party users.<br><br>
 (The screenshots of the web pages show examples of images and text)<br>
 
+---
+
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_1.png)
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_4.png)<br>
 ![Window](https://github.com/Demston/art-studio_web-project/blob/main/screen_6.png)<br>
