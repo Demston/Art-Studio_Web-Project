@@ -6,6 +6,8 @@
 Все кнопки взаимодействия скрыты от стороннего пользователя.<br><br>
 (На скриншотах веб-страниц представлены примеры изображений и текста)<br>
 
+---
+
 ## [ENG] Web Project "Art Studio"
 
 Created to order for an artist. The project was created using Python (Flask, Jinja), SQLite, HTML, and CSS.<br><br>
