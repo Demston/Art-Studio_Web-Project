@@ -1,10 +1,11 @@
 gitignore
-# Скомпилированный байт-код (то самое, о чем спрашивали)
+
+# Byte code
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Виртуальные окружения (самые тяжелые папки)
+# Venv
 venv/
 .venv/
 env/
@@ -13,24 +14,24 @@ include/
 lib/
 share/
 
-# Расширения для IDE
+# IDE extensions
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Переменные окружения и секреты (ОБЯЗАТЕЛЬНО К ИГНОРУ)
+# Vars of Venv
 .env
 .flaskenv
 *.local
 auth.json
 secrets.yaml
 
-# Файлы операционной системы
+# OS files
 .DS_Store
 Thumbs.db
 
-# Логи и временные файлы тестов
+# Logs
 *.log
 .pytest_cache/
 .coverage
