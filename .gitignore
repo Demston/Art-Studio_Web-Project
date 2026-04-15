@@ -1,0 +1,38 @@
+gitignore
+# Скомпилированный байт-код (то самое, о чем спрашивали)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальные окружения (самые тяжелые папки)
+venv/
+.venv/
+env/
+bin/
+include/
+lib/
+share/
+
+# Расширения для IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Переменные окружения и секреты (ОБЯЗАТЕЛЬНО К ИГНОРУ)
+.env
+.flaskenv
+*.local
+auth.json
+secrets.yaml
+
+# Файлы операционной системы
+.DS_Store
+Thumbs.db
+
+# Логи и временные файлы тестов
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
