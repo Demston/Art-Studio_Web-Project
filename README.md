@@ -1,20 +1,38 @@
-## [RU] Веб-проект "Арт-Студия"
+## [RU] Веб-проект "Арт-Студия" (Commercial Project)
 
-Делался на заказ для художника. В создании проекта использовались: Python (Flask, Jinja), SQLite, HTML, CSS.<br><br>
-Сайт состоит из главной страницы, раздела о себе, каталога с картинами и контактов. Веб-страницы масштабируются под разные разрешения экранов.<br><br>
-Админ сайта, через веб-интерфейс, может редактировать всю имеющуюся информацию: анонсы (текст, превью), картины (изображения, описание), информацию о себе (фото, биография), пароль профиля. 
-Все кнопки взаимодействия скрыты от стороннего пользователя.<br><br>
-(На скриншотах веб-страниц представлены примеры изображений и текста)<br>
+Фулл-стек веб-сайт, разработанный на заказ для профессионального художника. Проект полностью запущен и находится в продакшене.
+
+### 🛠 Стек технологий:
+* **Backend:** Python (Flask, Jinja)
+* **Database:** SQLite
+* **Frontend:** HTML5, CSS3 (Адаптивная/отзывчивая верстка)
+
+### 💻 Основной функционал:
+* **Публичная часть:** Главная страница, интерактивный каталог картин, биография ("О себе") и форма контактов.
+* **Адаптивность:** Полная поддержка мобильных устройств и планшетов (масштабирование под любые разрешения экранов).
+* **Панель администратора (CMS):** Веб-интерфейс для полного управления контентом без работы с кодом.
+* **Безопасность:** Авторизация администратора, возможность смены пароля, динамическое скрытие элементов управления и кнопок взаимодействия от сторонних пользователей.
+
+*(Ниже представлены скриншоты интерфейса с примерами наполнения)*
 
 ---
 
-## [ENG] Web Project "Art Studio"
+## [EN/US] Art Studio Web Project (Commercial Project)
 
-Created to order for an artist. The project was created using Python (Flask, Jinja), SQLite, HTML, and CSS.<br><br>
-The website consists of a home page, an about section, a catalog of paintings, and contact information. The web pages are scalable to different screen resolutions.<br><br>
-The website administrator can edit all available information via the web interface: announcements (text, previews), paintings (images, descriptions), personal information (photos, biography), and profile password.
-All interaction buttons are hidden from third-party users.<br><br>
-(The screenshots of the web pages show examples of images and text)<br>
+A full-stack website, custom-developed for a professional artist. The project is fully launched and in production.
+
+### 🛠 Tech Stack:
+* **Backend:** Python (Flask, Jinja)
+* **Database:** SQLite
+* **Frontend:** HTML5, CSS3 (Adaptive/Responsive Layout)
+
+### 💻 Main Features:
+* **Public Area:** Home page, interactive art catalog, biography ("About Me"), and contact form.
+* **Adaptive:** Full support for mobile devices and tablets (scalable to any screen resolution).
+* **Administrator Panel (CMS):** Web interface for complete content management without coding.
+* **Security:** Administrator authorization, password change option, dynamic hiding of controls and interaction buttons from third-party users.
+
+*(Screenshots of the interface with sample content are provided below)*
 
 ---
 
